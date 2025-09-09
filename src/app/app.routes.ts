@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+// src/app/app.routes.ts
+import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
-import { Role } from '../../src/app/shared/models/role';
+import { Role } from './shared/models/role';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: '/dashboard',
@@ -12,48 +12,42 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+    loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
   {
     path: 'admin',
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: [Role.ADMIN] },
-    loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./features/admin/admin.routes').then(m => m.adminRoutes)
   },
   {
     path: 'trainer',
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: [Role.ADMIN, Role.TRAINER] },
-    loadChildren: () => import('./features/trainer/trainer.module').then(m => m.TrainerModule)
+    loadChildren: () => import('./features/trainer/trainer.routes').then(m => m.trainerRoutes)
   },
   {
     path: 'student',
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: [Role.ADMIN, Role.TRAINER, Role.STUDENT] },
-    loadChildren: () => import('./features/student/student.module').then(m => m.StudentModule)
+    loadChildren: () => import('./features/student/student.routes').then(m => m.studentRoutes)
   },
   {
     path: 'profile',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfileModule)
+    loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent)
   },
   {
     path: 'unauthorized',
-    loadChildren: () => import('./features/error/error.module').then(m => m.ErrorModule)
+    loadComponent: () => import('./features/error/unauthorized.component').then(m => m.UnauthorizedComponent)
   },
   {
     path: '**',
     redirectTo: '/unauthorized'
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
