@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
+    loadComponent: () => import('../../src/app/features/dashboard/dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
   {
     path: 'admin',
@@ -40,11 +40,11 @@ export const routes: Routes = [
   {
     path: 'profile',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent)
+    loadComponent: () => import('../../src/app/features/profile/profile/profile.component').then(m => m.ProfileComponent)
   },
   {
     path: 'unauthorized',
-    loadComponent: () => import('./features/error/unauthorized.component').then(m => m.UnauthorizedComponent)
+    loadComponent: () => import('../../src/app/features/error/unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent)
   },
   {
     path: '**',

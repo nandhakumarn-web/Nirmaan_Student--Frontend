@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { StorageService } from './storage.service';
 import { User } from '../../shared/models/user';
 import { LoginRequest } from '../../shared/models/login-request';
 import { ApiResponse } from '../../shared/models/api-resonse';
 import { LoginResponse } from '../../shared/models/login-response';
 import { Role } from '../../shared/models/role';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
