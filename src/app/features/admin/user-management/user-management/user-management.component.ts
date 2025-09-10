@@ -130,7 +130,7 @@ import { UserRegistrationRequest } from '../../../../shared/models/user-registra
             <div class="user-info">
               <h4>{{ user.firstName }} {{ user.lastName }}</h4>
               <p class="user-email">{{ user.email }}</p>
-              <p class="user-username">@{{ user.username }}</p>
+              <p class="user-username">{{ user.username }}</p>
               <span class="role-badge" [ngClass]="user.role.toLowerCase()">
                 {{ user.role }}
               </span>

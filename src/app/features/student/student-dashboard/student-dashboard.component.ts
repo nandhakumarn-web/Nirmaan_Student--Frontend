@@ -294,4 +294,42 @@ import { User } from '../../../shared/models/user';
       }
 
       .dashboard-nav {
-        justify-content: center
+        justify-content: center;
+      }
+
+      .stats-cards,
+      .action-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `]
+})
+export class StudentDashboardComponent implements OnInit {
+  dashboardData: StudentDashboardData | null = null;
+  currentUser: User | null = null;
+  error: string = '';
+
+  constructor(
+    private studentService: StudentService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+    this.loadDashboardData();
+  }
+
+  loadDashboardData() {
+    this.studentService.getDashboardData().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.dashboardData = response.data;
+        }
+      },
+      error: (error) => {
+        this.error = 'Failed to load dashboard data';
+        console.error('Dashboard error:', error);
+      }
+    });
+  }
+}
